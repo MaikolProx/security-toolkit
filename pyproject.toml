@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "security-toolkit"
+version = "1.0.0"
+description = "Network and web security tools implemented from scratch (stdlib only)"
+requires-python = ">=3.10"
+
+[project.scripts]
+sec-tool = "security_toolkit.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
