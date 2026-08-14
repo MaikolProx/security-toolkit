@@ -1,8 +1,6 @@
 # Security Toolkit
 
-> Kit de herramientas de seguridad de red y aplicaciones, **implementado desde cero** (solo stdlib de Python) para auditorías autorizadas y laboratorios (TryHackMe / HackTheBox). Sin dependencias, sin bins externos: cada herramienta es legible, testeable y auditable.
-
-## Herramientas
+Herramientas de red y web para auditorías con permiso y laboratorios (TryHackMe, HackTheBox). Solo stdlib de Python, sin dependencias.
 
 | Herramienta | Qué hace | Uso |
 |---|---|---|
@@ -10,9 +8,11 @@
 | `subenum` | Enumeración de subdominios por DNS + diccionario | `sec-tool subenum -d ejemplo.com -w wordlist.txt` |
 | `httpaudit` | Auditoría de cabeceras de seguridad HTTP | `sec-tool httpaudit -u https://ejemplo.com` |
 | `jwtdump` | Decodificación e inspección de tokens JWT | `sec-tool jwtdump -t <token>` |
-| `dirbust` | Fuerza bruta de directorios/archivos con wordlist (códigos HTTP) | `sec-tool dirbust -u http://10.10.10.1 -w wordlist.txt` |
+| `dirbust` | Fuerza bruta de directorios con wordlist (códigos HTTP) | `sec-tool dirbust -u http://10.10.10.1 -w wordlist.txt` |
 
-> **Aviso legal**: úsalo únicamente contra sistemas de tu propiedad o con autorización por escrito. El escaneo sin permiso es ilegal en casi todas las jurisdicciones.
+Por qué stdlib solo: puedo leer el código entero en una tarde, funciona en cualquier máquina del laboratorio sin instalar nada, y cada pieza está testeada.
+
+Aviso: úsalo solo contra sistemas propios o con autorización por escrito. Escanear sin permiso es ilegal en casi todas las jurisdicciones.
 
 ## Instalación
 
@@ -23,16 +23,16 @@ pip install -e .
 ## Ejemplos
 
 ```bash
-# Escaneo de puertos con detección de banner (conexión real)
+# Escaneo de puertos con banner
 sec-tool portscan -h 10.10.10.1 -p 22,80,443,3306 --banner
 
 # Enumerar subdominios desde diccionario
 sec-tool subenum -d tryhackme.com -w wordlists/subdomains.txt
 
-# Auditar cabeceras de seguridad de una web
+# Auditar cabeceras de seguridad
 sec-tool httpaudit -u https://mi-sitio.com
 
-# Decodificar un JWT sin validar la firma (solo inspección)
+# Decodificar un JWT (solo inspección, no valida firma)
 sec-tool jwtdump -t eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
@@ -42,14 +42,8 @@ sec-tool jwtdump -t eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 pytest -q
 ```
 
-Cubren parsing de rangos de puertos, clasificación de puertos comunes, parseo de cabeceras HTTP y decodificación JWT (incluyendo el ataque de firma débil — `alg:none`).
+Cubren parsing de rangos de puertos, clasificación de puertos comunes, parseo de cabeceras HTTP y decodificación JWT, incluida la firma débil `alg:none`.
 
-## Por qué sin dependencias
+## Write-ups
 
-- Cualquier evaluador puede revisar el código completo en minutos (importa para entrevistas y para red team review).
-- Funciona en el laboratorio de TryHackMe sin instalar nada más que Python.
-- Cada vulnerabilidad que detecta está documentada en `writeups/` con la metodología usada.
-
-## Write-ups (metodología publicada)
-
-- `writeups/TEMPLATE.md` — plantilla de write-up CTF con secciones Scope / Recon / Finding / Impact / Remediation, incluyendo los callejones sin salida (dead-ends), que es lo que más valoran los hiring managers.
+En `writeups/` está la plantilla que uso para cada máquina resuelta. Incluyo los callejones sin salida, que es lo que más se aprende y lo que más preguntan en las entrevistas.
